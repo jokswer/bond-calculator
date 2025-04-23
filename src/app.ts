@@ -1,11 +1,27 @@
-const express = require("express");
+import express from "express";
 
-const app = express();
+import appRoutes from "./routes/index.ts";
+import { connectToDatabase } from "./services/index.ts";
+import { TokensRepository, UsersRepository } from "./repositories/index.ts";
+import { UsersController } from "./controllers/index.ts";
 
-app.get("/", (req, res) => {
-  res.send("Hello World!!!");
-});
+async function startServer() {
+  await connectToDatabase(process.env.MONGODB_URI);
 
-app.listen(3000, () => {
-  console.log(`Example app listening on port ${3000}`);
-});
+  const tokensRepository = new TokensRepository();
+  const usersRepository = new UsersRepository(tokensRepository);
+  
+  const usersController = new UsersController(usersRepository);
+
+  const app = express();
+
+  app.use(express.json());
+
+  appRoutes(app, usersController);
+
+  app.listen(process.env.PORT, () => {
+    console.log(`Server started on port ${process.env.PORT}`);
+  });
+}
+
+startServer();
