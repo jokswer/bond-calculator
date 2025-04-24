@@ -1,6 +1,13 @@
+import type { NextFunction, Request, Response } from "express";
+
 import ApiError from "../exceptions/api.exception.ts";
 
-export function errorMiddleware(error, req, res, next) {
+export function errorMiddleware(
+  error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   console.error(error);
 
   if (error instanceof ApiError) {
@@ -9,5 +16,5 @@ export function errorMiddleware(error, req, res, next) {
       .json({ message: error.message, errors: error.errors });
   }
 
-  return res.status(500).json({ message: "Unexpected error" });
+  return res.status(500).json({ message: "Internal Server Error" });
 }
