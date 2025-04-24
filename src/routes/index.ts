@@ -1,6 +1,6 @@
 import { type Express } from "express";
 
-import usersRouter from "./users.ts";
+import usersRouter from "./users.route.ts";
 import { type UsersController } from "../controllers/index.ts";
 
 function appRoutes(app: Express, usersController: UsersController) {

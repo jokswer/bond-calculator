@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import { type UsersRepository } from "../repositories/index.ts";
 
@@ -9,7 +9,7 @@ class UsersController {
     this.repository = repository;
   }
 
-  public registerUser = async (req: Request, res: Response) => {
+  public registerUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
 
@@ -17,8 +17,7 @@ class UsersController {
 
       res.json(userData);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server error" });
+      next(error)
     }
   };
 
