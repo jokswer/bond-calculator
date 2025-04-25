@@ -25,6 +25,11 @@ function usersRouter(app: Express, controller: UsersController) {
     validateMiddleware(userTokenValidationSchema),
     controller.logoutUser
   );
+  router.post(
+    "/refresh",
+    validateMiddleware(userTokenValidationSchema),
+    controller.refreshToken
+  );
 
   app.use("/users", router);
 }

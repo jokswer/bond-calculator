@@ -58,6 +58,32 @@ class UsersRepository {
   public logout = async (refreshToken: string) => {
     await this.tokensRepository.removeToken(refreshToken);
   };
+
+  public refresh = async (refreshToken: string) => {
+    if (!refreshToken) {
+      throw ApiError.UnauthorizedError();
+    }
+
+    const userTokenData = this.tokensRepository.validateRefreshToken(refreshToken);
+
+    if (!userTokenData) {
+      throw ApiError.UnauthorizedError();
+    }
+
+    const tokenFromDb = await this.tokensRepository.findToken(refreshToken);
+
+    if (!tokenFromDb) {
+      throw ApiError.UnauthorizedError();
+    }
+
+    const user = await userModel.findById(userTokenData.id)
+    const userDto = new UserDto(user._id.toString(), user.email);
+    const tokens = this.tokensRepository.generateTokens({ ...userDto });
+
+    await this.tokensRepository.saveToken(userDto.id, tokens.refreshToken);
+
+    return { ...tokens, user: userDto };
+  };
 }
 
 export default UsersRepository;

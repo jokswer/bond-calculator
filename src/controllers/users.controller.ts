@@ -56,6 +56,18 @@ class UsersController {
       next(error);
     }
   };
+
+  public refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { refreshToken } = req.body;
+
+      const userData = await this.repository.refresh(refreshToken);
+
+      res.json(userData);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UsersController;

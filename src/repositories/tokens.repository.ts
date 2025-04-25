@@ -15,6 +15,24 @@ class TokensRepository {
     return { accessToken, refreshToken };
   };
 
+  public validateAccessToken = (accessToken: string) => {
+    try {
+      const userData = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
+      return userData as UserDto;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public validateRefreshToken = (refreshToken) => {
+    try {
+      const userData = jwt.verify(refreshToken, process.env.JVT_REFRESH_SECRET);
+      return userData as UserDto;
+    } catch (error) {
+      return null;
+    }
+  };
+
   public saveToken = async (userId: string, refreshToken: string) => {
     const tokenData = await tokenModel.findOne({ user: userId });
 
@@ -29,6 +47,11 @@ class TokensRepository {
 
   public removeToken = async (refreshToken: string) => {
     const tokenData = await tokenModel.deleteOne({ refreshToken });
+    return tokenData;
+  };
+
+  public findToken = async (refreshToken: string) => {
+    const tokenData = await tokenModel.findOne({ refreshToken });
     return tokenData;
   };
 }
