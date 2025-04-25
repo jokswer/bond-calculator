@@ -40,6 +40,22 @@ class UsersController {
       next(error);
     }
   };
+
+  public logoutUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { refreshToken } = req.body;
+
+      await this.repository.logout(refreshToken);
+
+      res.status(200).json("Done");
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UsersController;

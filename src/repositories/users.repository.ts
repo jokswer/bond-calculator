@@ -54,6 +54,10 @@ class UsersRepository {
 
     return { ...tokens, user: userDto };
   };
+
+  public logout = async (refreshToken: string) => {
+    await this.tokensRepository.removeToken(refreshToken);
+  };
 }
 
 export default UsersRepository;

@@ -13,7 +13,7 @@ class TokensRepository {
     });
 
     return { accessToken, refreshToken };
-  }
+  };
 
   public saveToken = async (userId: string, refreshToken: string) => {
     const tokenData = await tokenModel.findOne({ user: userId });
@@ -25,7 +25,12 @@ class TokensRepository {
 
     const newToken = await tokenModel.create({ user: userId, refreshToken });
     return newToken;
-  }
+  };
+
+  public removeToken = async (refreshToken: string) => {
+    const tokenData = await tokenModel.deleteOne({ refreshToken });
+    return tokenData;
+  };
 }
 
 export default TokensRepository;
