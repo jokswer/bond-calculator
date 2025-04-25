@@ -2,12 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 
 import ApiError from "../exceptions/api.exception.ts";
 
-export function errorMiddleware(
-  error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function errorMiddleware(error, req: Request, res: Response, next) {
   console.error(error);
 
   if (error instanceof ApiError) {

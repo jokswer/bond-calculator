@@ -33,6 +33,27 @@ class UsersRepository {
 
     return { ...tokens, user: userDto };
   };
+
+  public login = async (email: string, password: string) => {
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      throw ApiError.BadRequest("Email not found");
+    }
+
+    const isPasswordEqual = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordEqual) {
+      throw ApiError.BadRequest("Incorrect password");
+    }
+
+    const userDto = new UserDto(user._id.toString(), user.email);
+    const tokens = this.tokensRepository.generateTokens({ ...userDto });
+
+    await this.tokensRepository.saveToken(userDto.id, tokens.refreshToken);
+
+    return { ...tokens, user: userDto };
+  };
 }
 
 export default UsersRepository;

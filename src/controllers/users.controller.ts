@@ -9,7 +9,11 @@ class UsersController {
     this.repository = repository;
   }
 
-  public registerUser = async (req: Request, res: Response, next: NextFunction) => {
+  public registerUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { email, password } = req.body;
 
@@ -17,12 +21,24 @@ class UsersController {
 
       res.json(userData);
     } catch (error) {
-      next(error)
+      next(error);
     }
   };
 
-  public loginUser = async (req, res) => {
-    res.send("User logged in");
+  public loginUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { email, password } = req.body;
+
+      const userData = await this.repository.login(email, password);
+
+      res.json(userData);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

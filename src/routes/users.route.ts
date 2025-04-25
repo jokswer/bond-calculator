@@ -12,7 +12,11 @@ function usersRouter(app: Express, controller: UsersController) {
     validateMiddleware(userValidationSchema),
     controller.registerUser
   );
-  router.post("/login", controller.loginUser);
+  router.post(
+    "/login",
+    validateMiddleware(userValidationSchema),
+    controller.loginUser
+  );
 
   app.use("/users", router);
 }
