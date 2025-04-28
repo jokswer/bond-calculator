@@ -24,7 +24,7 @@ class TokensRepository {
     }
   };
 
-  public validateRefreshToken = (refreshToken) => {
+  public validateRefreshToken = (refreshToken: string) => {
     try {
       const userData = jwt.verify(refreshToken, process.env.JVT_REFRESH_SECRET);
       return userData as UserDto;

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 
 import type TokensRepository from "./tokens.repository.ts";
+
 import { userModel } from "../models/index.ts";
 import { UserDto } from "../dtos/index.ts";
 import { ApiError } from "../exceptions/index.ts";
