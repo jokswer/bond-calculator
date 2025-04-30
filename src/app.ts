@@ -15,10 +15,13 @@ async function startServer() {
 
   const tokensRepository = new TokensRepository();
   const usersRepository = new UsersRepository(tokensRepository);
-  const bondsRepository = new BondsRepository(tokensRepository);
+  const bondsRepository = new BondsRepository();
 
   const usersController = new UsersController(usersRepository);
-  const bondsController = new BondsController(bondsRepository);
+  const bondsController = new BondsController(
+    bondsRepository,
+    tokensRepository
+  );
 
   const app = express();
 

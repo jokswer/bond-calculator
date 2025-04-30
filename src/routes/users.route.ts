@@ -5,7 +5,7 @@ import { validateMiddleware } from "../middlewares/validation.middleware.ts";
 import {
   userTokenValidationSchema,
   userValidationSchema,
-} from "../validations/user.validation.ts";
+} from "../validations/index.ts";
 
 function usersRouter(app: Express, controller: UsersController) {
   const router = Router();
