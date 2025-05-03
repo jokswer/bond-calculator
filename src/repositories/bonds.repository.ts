@@ -1,4 +1,4 @@
-import BondDto from "../dtos/bond.dto.ts";
+import { BondDto } from "../dtos/index.ts";
 import { bondModel } from "../models/index.ts";
 import {
   getCouponRate,
@@ -44,6 +44,26 @@ class BondsRepository {
     });
 
     return { ...bondDto };
+  };
+
+  public getAllUserBonds = async (userId: string) => {
+    const bonds = await bondModel.find({ userId });
+    return bonds.map((bond) => ({
+      ...new BondDto({
+        id: bond._id.toString(),
+        name: bond.name,
+        quantity: bond.quantity,
+        faceValue: bond.faceValue,
+        purchasePrice: bond.purchasePrice,
+        paymentsPerYear: bond.paymentsPerYear,
+        couponAmount: bond.couponAmount,
+        couponRate: bond.couponRate,
+        currentYield: bond.currentYield,
+        yieldToMaturity: bond.yieldToMaturity,
+        maturityDate: bond.maturityDate.toISOString(),
+        total: bond.total,
+      }),
+    }));
   };
 }
 

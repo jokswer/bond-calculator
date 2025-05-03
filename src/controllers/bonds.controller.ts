@@ -62,9 +62,16 @@ class BondsController {
     }
   };
 
-  public getAllBonds = (req: Request, res: Response, next: NextFunction) => {
+  public getAllUserBonds = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("");
+      const userId = this.getUserId(req);
+
+      if (!userId) {
+        throw ApiError.UnauthorizedError();
+      }
+
+      const bonds = await this.bondsRepository.getAllUserBonds(userId);
+      res.json(bonds);
     } catch (error) {
       next(error);
     }
