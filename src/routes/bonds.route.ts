@@ -8,7 +8,7 @@ function bondsRouter(app: Express, controller: BondsController) {
   const router = Router();
 
   router.get("/all", controller.getAllUserBonds);
-  router.get("/:id", controller.getBond);
+  router.get("/:id", controller.getBondById);
   router.post(
     "/create",
     validateMiddleware(bondValidationSchema),

@@ -54,15 +54,41 @@ class BondsController {
     }
   };
 
-  public getBond = (req: Request, res: Response, next: NextFunction) => {
+  public getBondById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      res.json("");
+      const userId = this.getUserId(req);
+
+      if (!userId) {
+        throw ApiError.UnauthorizedError();
+      }
+
+      const bondId = req.params?.id;
+
+      if (!bondId) {
+        throw ApiError.BadRequest("Bond id is require");
+      }
+
+      const bond = await this.bondsRepository.getUserBondById(userId, bondId);
+
+      if (!bond) {
+        throw ApiError.BadRequest("Bond not found");
+      }
+
+      res.json(bond);
     } catch (error) {
       next(error);
     }
   };
 
-  public getAllUserBonds = async (req: Request, res: Response, next: NextFunction) => {
+  public getAllUserBonds = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const userId = this.getUserId(req);
 
