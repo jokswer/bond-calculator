@@ -11,7 +11,7 @@ const bondSchema = new Schema({
   couponRate: { type: Number },
   currentYield: { type: Number },
   yieldToMaturity: { type: Number, require: true },
-  maturityDate: { type: Date },
+  maturityDate: { type: Date, require: true },
   total: { type: Number, require: true },
 });
 

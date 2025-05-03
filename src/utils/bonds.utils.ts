@@ -26,7 +26,8 @@ export const getCouponRate = ({
   faceValue,
 }: TGetCouponRateArgs) => {
   if (!couponAmount || !paymentsPerYear || !faceValue) return null;
-  return (couponAmount * paymentsPerYear) / faceValue;
+  const result = (couponAmount * paymentsPerYear) / faceValue;
+  return (result * 100).toFixed(2);
 };
 
 export const getCurrentYield = ({
@@ -35,7 +36,8 @@ export const getCurrentYield = ({
   purchasePrice,
 }: TGetCurrentYieldArgs) => {
   if (!couponAmount || !paymentsPerYear || !purchasePrice) return null;
-  return (couponAmount * paymentsPerYear) / purchasePrice;
+  const result = (couponAmount * paymentsPerYear) / purchasePrice;
+  return (result * 100).toFixed(2);
 };
 
 export const getYieldToMaturity = ({
@@ -43,7 +45,8 @@ export const getYieldToMaturity = ({
   purchasePrice,
 }: TGetYieldToMaturityArgs) => {
   if (!faceValue || !purchasePrice) return null;
-  return (faceValue - purchasePrice) / purchasePrice;
+  const result = (faceValue - purchasePrice) / faceValue;
+  return (result * 100).toFixed(2);
 };
 
 export const getTotal = ({ quantity, faceValue }: TGetTotalArgs) => {

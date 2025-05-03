@@ -6,6 +6,6 @@ export const bondValidationSchema = z.object({
   faceValue: z.number().positive().min(1),
   purchasePrice: z.number().positive().min(1),
   paymentsPerYear: z.number().positive().min(1),
-  couponAmount: z.number().positive(),
-  maturityDate: z.string(),
+  couponAmount: z.number().positive().optional(),
+  maturityDate: z.string().date().min(1),
 });

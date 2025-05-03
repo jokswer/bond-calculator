@@ -1,3 +1,18 @@
+type TConstructorArgs = {
+  id: string;
+  name: string;
+  quantity: number;
+  faceValue: number;
+  purchasePrice: number;
+  paymentsPerYear: number;
+  couponAmount: number;
+  couponRate: number;
+  currentYield: number;
+  yieldToMaturity: number;
+  maturityDate: string;
+  total: number;
+};
+
 export default class BondDto {
   public readonly id: string;
   public readonly name: string;
@@ -9,7 +24,7 @@ export default class BondDto {
   public readonly couponRate: number;
   public readonly currentYield: number;
   public readonly yieldToMaturity: number;
-  public readonly maturityDate: Date;
+  public readonly maturityDate: string;
   public readonly total: number;
 
   constructor({
@@ -25,7 +40,7 @@ export default class BondDto {
     yieldToMaturity,
     maturityDate,
     total,
-  }) {
+  }: TConstructorArgs) {
     this.id = id;
     this.name = name;
     this.quantity = quantity;

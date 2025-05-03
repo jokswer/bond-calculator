@@ -28,7 +28,20 @@ class BondsRepository {
       total: getTotal(bondData),
     });
 
-    const bondDto = new BondDto({ id: bond._id.toString(), ...bond });
+    const bondDto = new BondDto({
+      id: bond._id.toString(),
+      name: bond.name,
+      quantity: bond.quantity,
+      faceValue: bond.faceValue,
+      purchasePrice: bond.purchasePrice,
+      paymentsPerYear: bond.paymentsPerYear,
+      couponAmount: bond.couponAmount,
+      couponRate: bond.couponRate,
+      currentYield: bond.currentYield,
+      yieldToMaturity: bond.yieldToMaturity,
+      maturityDate: bond.maturityDate.toISOString(),
+      total: bond.total,
+    });
 
     return { ...bondDto };
   };
