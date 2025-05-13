@@ -90,6 +90,18 @@ class BondsRepository {
       }),
     }));
   };
+
+  public deleteBondById = async (userId: string, bondId: string) => {
+    const bond = await bondModel
+      .findOneAndDelete({ userId, _id: bondId })
+      .exec();
+
+    if (!bond) {
+      return null;
+    }
+
+    return bond;
+  };
 }
 
 export default BondsRepository;

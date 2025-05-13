@@ -46,9 +46,24 @@ class BondsController {
     }
   };
 
-  public deleteBond = (req: Request, res: Response, next: NextFunction) => {
+  public deleteBond = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json("");
+      const userId = this.getUserId(req);
+
+      if (!userId) {
+        throw ApiError.UnauthorizedError();
+      }
+
+      const bondId = req.params?.id;
+
+
+      const bond = await this.bondsRepository.deleteBondById(userId, bondId);
+
+      if (!bond) {
+        throw ApiError.BadRequest("Bond not found");
+      }
+
+      res.json("Success");
     } catch (error) {
       next(error);
     }
