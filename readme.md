@@ -37,3 +37,18 @@ A RESTful API for bond calculations and management built with **Express.js**, **
 
 - Node.js (v22+ recommended)
 - npm
+
+### Installation
+
+1. Clone the repository.
+
+2. Install dependencies (only TypeScript and development tools):
+```bash
+npm install
+```
+
+3. Start the server:
+```bash
+npm start
+```
+By default, the server runs on http://localhost:3000
