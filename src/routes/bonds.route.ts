@@ -14,7 +14,11 @@ function bondsRouter(app: Express, controller: BondsController) {
     validateMiddleware(bondValidationSchema),
     controller.createBond
   );
-  router.patch("/edit/:id", controller.editBond);
+  router.patch(
+    "/edit/:id",
+    validateMiddleware(bondValidationSchema),
+    controller.editBond
+  );
   router.delete("/delete/:id", controller.deleteBond);
 
   app.use("/bonds", router);

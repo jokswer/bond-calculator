@@ -38,15 +38,7 @@ class BondsController {
     }
   };
 
-  public editBond = (req: Request, res: Response, next: NextFunction) => {
-    try {
-      res.json("");
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public deleteBond = async (req: Request, res: Response, next: NextFunction) => {
+  public editBond = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = this.getUserId(req);
 
@@ -55,7 +47,33 @@ class BondsController {
       }
 
       const bondId = req.params?.id;
+      const bondData = req.body;
 
+      const bond = await this.bondsRepository.editBondById(
+        userId,
+        bondId,
+        bondData
+      );
+
+      res.json(bond);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deleteBond = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userId = this.getUserId(req);
+
+      if (!userId) {
+        throw ApiError.UnauthorizedError();
+      }
+
+      const bondId = req.params?.id;
 
       const bond = await this.bondsRepository.deleteBondById(userId, bondId);
 

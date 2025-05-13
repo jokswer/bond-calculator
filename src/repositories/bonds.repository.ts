@@ -102,6 +102,42 @@ class BondsRepository {
 
     return bond;
   };
+
+  public editBondById = async (
+    userId: string,
+    bondId: string,
+    bondData: TBondData
+  ) => {
+    const bond = await bondModel.findOneAndUpdate(
+      { userId, _id: bondId },
+      {
+        ...bondData,
+        userId,
+        couponRate: getCouponRate(bondData),
+        currentYield: getCurrentYield(bondData),
+        yieldToMaturity: getYieldToMaturity(bondData),
+        total: getTotal(bondData),
+      },
+      { new: true }
+    );
+
+    const bondDto = new BondDto({
+      id: bond._id.toString(),
+      name: bond.name,
+      quantity: bond.quantity,
+      faceValue: bond.faceValue,
+      purchasePrice: bond.purchasePrice,
+      paymentsPerYear: bond.paymentsPerYear,
+      couponAmount: bond.couponAmount,
+      couponRate: bond.couponRate,
+      currentYield: bond.currentYield,
+      yieldToMaturity: bond.yieldToMaturity,
+      maturityDate: bond.maturityDate.toISOString(),
+      total: bond.total,
+    });
+
+    return { ...bondDto };
+  };
 }
 
 export default BondsRepository;
